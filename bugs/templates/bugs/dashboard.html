@@ -1,0 +1,49 @@
+{% extends 'bugs/main.html' %}
+
+{% block content %}
+
+{% include 'bugs/status.html' %}
+
+<br>
+
+<div class="row">
+	<div class="col-md-5">
+		<h5>RECENT UPDATES</h5>
+		<hr>
+		<div class="card card-body">
+			<a class="btn btn-primary  btn-sm btn-block" href="">Create Update</a>
+			<table class="table table-sm">
+				<tr>
+					<th></th>
+					<th>Employee</th>
+					<th>Ticket</th>
+					<th>Update</th>
+				</tr>
+
+			</table>
+		</div>
+	</div>
+
+	<div class="col-md-7">
+		<h5>RECENT TICKETS</h5>
+		<hr>
+		<div class="card card-body">
+			<a class="btn btn-primary  btn-sm btn-block" href="">Create Ticket</a>
+			<table class="table table-sm">
+				<tr>
+					<th>Title</th>
+					<th>Date Created</th>
+					<th>Category</th>
+					<th>Status</th>
+					<th>Urgency</th>
+					<th>Assigned To</th>
+					<th>Created By</th>
+				</tr>
+		
+			</table>
+		</div>
+	</div>
+
+</div>
+
+{% endblock %}
