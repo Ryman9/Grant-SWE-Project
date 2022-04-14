@@ -1,11 +1,19 @@
-from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, get_user_model, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.views.decorators.csrf import csrf_exempt
 from .models import *
 from .forms import *
 
 # Create your views here.
 def home(request):
-    return render(request, 'bugs/dashboard.html')
+    context = {"updates": Update.objects.all()}
+    context["logged_in"] = request.user.is_authenticated
+    if request.user.is_authenticated:
+        context["tickets"] = searchTickets(assignUser=0)
+    return render(request, 'bugs/dashboard.html', context)
 
 def tickets(request):
     return render(request, 'bugs/tickets.html')
@@ -13,6 +21,7 @@ def tickets(request):
 def about(request):
     return render(request, 'bugs/about.html')
 
+@csrf_exempt
 def createTicket(request):
     form = TicketForm
     if request.method == 'POST':
@@ -24,6 +33,7 @@ def createTicket(request):
     context = {'form':form}
     return render(request, 'bugs/create_form.html', context)
 
+@csrf_exempt
 def updateTicket(request, pk):
     ticket = Ticket.objects.get(id=pk)
     form = TicketForm(instance=ticket)
@@ -37,18 +47,20 @@ def updateTicket(request, pk):
     context = {'form':form}
     return render(request, 'bugs/create_form.html', context)
 
+@csrf_exempt
 def deleteTicket(request, pk):
     ticket = Ticket.objects.get(id=pk)
-    if request.method == "POST":
+    if request.method == "DELETE":
         ticket.delete()
         return redirect('/')
 
     context = {'item':ticket}
     return render(request, 'bugs/delete_form.html', context)
 
+@csrf_exempt
 def createUpdate(request):
     form = UpdateForm
-    if request.method == 'POST':
+    if request.method == "POST":
         form = UpdateForm(request.POST)
         if form.is_valid():
             form.save()
@@ -57,11 +69,50 @@ def createUpdate(request):
     context = {'form':form}
     return render(request, 'bugs/create_form.html', context)
 
+@csrf_exempt
 def deleteUpdate(request, pk):
     update = Update.objects.get(id=pk)
-    if request.method == "POST":
+    if request.method == "DELETE":
         update.delete()
         return redirect('/')
 
     context = {'item':update}
     return render(request, 'bugs/delete_form.html', context)
+
+# Andrew
+def searchTickets(category="", urgency="", createDate="", createUser=-1, assignUser=-1):
+    res = Ticket.objects.all()
+    if len(category) > 0:
+        res = res.filter(Q(category__equals=category))
+    if len(urgency) > 0:
+        res = res.filter(Q(urgency__equals=urgency))
+    if len(createDate) > 0:
+        res = res.filter(Q(timestamp__equals=createDate))
+    if createUser > 0:
+        res = res.filter(Q(createdBy_id__equals=createUser))
+    if assignUser > 0:
+        res = res.filter(Q(assignedTo_id__equals=assignUser))
+    return res
+
+# Login code
+# @csrf_exempt
+# def handle_login(request):
+# 	if not request.user.is_authenticated:
+# 		email = request.POST["email"]
+# 		key = request.POST["key"]
+# 		user = authenticate(request, username=email, password=key)
+#
+# 		if user is not None and key == _key:
+# 			login(request, user)
+# 			if request.user.is_authenticated:
+# 				request.session.set_expiry(1800) # 30 min.
+# 				return redirect("?")
+# 			else:
+# 				return render(request, "error.html")
+# 		else:
+# 			return render(request, "error.html")
+# 	else:
+# 		return redirect("?")
+#
+# @login_required(login_url="?")
+# @login_required
