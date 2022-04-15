@@ -89,18 +89,16 @@
 <a href="\dashboard" class="gobackbutton"> Go back to dashboard </a>
 <br />
 <br />
-=======
-{% extends 'bugs/main.html' %}
-{% load static %}
-{% block content %}
+<!--
+Antonio- commenting out merged code bases causing errors
 
-<p>Are you sure you want to delete "{{item}}"?</p>
+<p>Are you sure you want to delete ""?</p>
 
-<form action="{% url 'delete' item.id%}" method="POST">
+<form action="" method="POST">
     {% csrf_token %}
     <a href="{% url 'home' %}">Cancel</a>
     <input type="submit", name="Confirm">
 </form>
 
->>>>>>> 27cb0d833d991c70c5c73656d60d42046e48e12d
+-->
 {% endblock %}
