@@ -1,3 +1,18 @@
+<<<<<<< HEAD
+
+from django.shortcuts import render
+from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+# Create your views here.
+
+#Antonio: defines the views and provides user login authenication for the system
+def main(request):
+    return render(request, 'bugs/main.html')
+
+@login_required(login_url="/users/login_user")
+def dashboard(request):
+    return render(request, 'bugs/dashboard.html')
+=======
 from django.contrib.auth import authenticate, get_user_model, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -14,13 +29,38 @@ def home(request):
     if request.user.is_authenticated:
         context["tickets"] = searchTickets(assignUser=0)
     return render(request, 'bugs/dashboard.html', context)
+>>>>>>> 27cb0d833d991c70c5c73656d60d42046e48e12d
 
+@login_required(login_url="/users/login_user")
 def tickets(request):
     return render(request, 'bugs/tickets.html')
 
+@login_required(login_url="/users/login_user")
 def about(request):
     return render(request, 'bugs/about.html')
 
+<<<<<<< HEAD
+def login(request):
+    return render(request, 'bugs/login.html')
+
+def aboutNotLogged(request):
+    return render(request, 'bugs/aboutNotLogged.html')
+
+def homePage(request):
+    return render(request, 'bugs/homePage.html')
+
+@login_required(login_url="/users/login_user")
+def createTicket(request):
+    return render(request,'bugs/create_form.html')
+
+@login_required(login_url="/users/login_user")
+def updateTicket(request):
+    return render(request,'bugs/update_form.html')
+
+@login_required(login_url="/users/login_user")
+def deleteTicket(request):
+    return render(request,'bugs/delete_form.html')
+=======
 @csrf_exempt
 def createTicket(request):
     form = TicketForm
@@ -116,3 +156,4 @@ def searchTickets(category="", urgency="", createDate="", createUser=-1, assignU
 #
 # @login_required(login_url="?")
 # @login_required
+>>>>>>> 27cb0d833d991c70c5c73656d60d42046e48e12d

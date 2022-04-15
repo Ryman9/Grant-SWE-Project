@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-<!--Antonio: Form to delete a ticket from the database-->
 {% extends 'bugs/main.html' %}
 
 {% block content %}
@@ -25,24 +23,13 @@
         cursor: pointer;
     }
 
-    .deletebutton {
-        background-color: red;
-        display: inline-block;
-        color: white;
-        padding: 12px 34px;
-        font-size: 24px;
-        margin: 0;
-        position: absolute;
-        top: 60%;
-        left: 42%;
-        cursor: pointer;
-    }
+   
 </style>
-<h2>Delete A Ticket</h2>
+<h2>Update A Ticket</h2>
 <br />
 <br />
 
-<!--STILL NEEDS TO BE DONE: CONNECT FORM TO DATABASE TO DELETE FROM DB-->
+
 <form action="" method=POST>
     {% csrf_token %}
 
@@ -55,13 +42,13 @@
         <div class="form-group col-md-4">
             <label for="inputUrgency">Ticket ID</label>
             <select id="inputUrgency" class="form-control">
-                <option selected>Choose the ticket you wish to delete</option>
+                <option selected>Choose the ticket you wish to update</option>
                 <option> ...</option>
 
             </select>
         </div>
         <div class="form-group col-md-6">
-            <label for="exampleFormControlTextarea1">Why are you deleting the ticket?</label>
+            <label for="exampleFormControlTextarea1">What is the update status for the ticket?</label>
             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Description..."></textarea>
         </div>
 
@@ -78,8 +65,7 @@
             </div>
         </div>
     </div>
-
-    <a href="#" class="deletebutton"> Delete Ticket </a>
+    <button type="submit" class="btn btn-primary">Update Ticket</button>
 
 </form>
 
@@ -89,18 +75,4 @@
 <a href="\dashboard" class="gobackbutton"> Go back to dashboard </a>
 <br />
 <br />
-=======
-{% extends 'bugs/main.html' %}
-{% load static %}
-{% block content %}
-
-<p>Are you sure you want to delete "{{item}}"?</p>
-
-<form action="{% url 'delete' item.id%}" method="POST">
-    {% csrf_token %}
-    <a href="{% url 'home' %}">Cancel</a>
-    <input type="submit", name="Confirm">
-</form>
-
->>>>>>> 27cb0d833d991c70c5c73656d60d42046e48e12d
 {% endblock %}

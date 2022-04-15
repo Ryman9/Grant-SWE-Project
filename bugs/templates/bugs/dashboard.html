@@ -2,16 +2,42 @@
 
 {% block content %}
 
+{% include 'bugs/navbar.html' %}
+
+<!--User dashboard-->
+
+
+<br />
+<br />
+<br />
+<br />
 {% include 'bugs/status.html' %}
+
+
 
 <br>
 
+<style>
+	#recent {
+		padding-left: 240px;
+	}
+
+	#ticketAssigned {
+		padding-left: 400px;
+	}
+</style>
+
+<!--STILL NEEDS TO BE DONE. CONNECT TO DB TO SHOW CONTENT ON TABLES HERE.-->
 <div class="row">
 	<div class="col-md-5">
-		<h5>RECENT UPDATES</h5>
+		<h5 id="recent">RECENT UPDATES</h5>
 		<hr>
 		<div class="card card-body">
+<<<<<<< HEAD
+			<a class="btn btn-primary  btn-sm btn-block" href="\updateTicket">Create Update</a>
+=======
 			<a class="btn btn-primary  btn-sm btn-block" href="{% url 'create_update' %}">Create Update</a>
+>>>>>>> 27cb0d833d991c70c5c73656d60d42046e48e12d
 			<table class="table table-sm">
 				<tr>
 					<th></th>
@@ -25,10 +51,14 @@
 	</div>
 
 	<div class="col-md-7">
-		<h5>RECENT TICKETS</h5>
+		<h5 id="ticketAssigned">ASSIGNED TICKETS</h5>
 		<hr>
 		<div class="card card-body">
+<<<<<<< HEAD
+			<a class="btn btn-primary  btn-sm btn-block" href="\createTicket">Create Tickets</a>
+=======
 			<a class="btn btn-primary  btn-sm btn-block" href="{% url 'create_ticket' %}">Create Ticket</a>
+>>>>>>> 27cb0d833d991c70c5c73656d60d42046e48e12d
 			<table class="table table-sm">
 				<tr>
 					<th>Title</th>
@@ -39,11 +69,14 @@
 					<th>Assigned To</th>
 					<th>Created By</th>
 				</tr>
-		
+
 			</table>
 		</div>
 	</div>
 
 </div>
 
-{% endblock %}
+
+	{% endblock %}
+
+

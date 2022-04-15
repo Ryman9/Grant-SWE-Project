@@ -1,18 +1,54 @@
 {% extends 'bugs/main.html' %}
-
+<!--Displays ticket tables with information from db-->
 {% block content %}
-
+{% include 'bugs/navbar.html' %}
 <br>
+<style>
+    .tickets h1 {
+        color: white;
+        text-align: center;
+        padding: 20px;
+        border: 2px solid black;
+    }
+
+    .card card-body {
+        background: transparent;
+    }
+
+    .label {
+        text-align: center;
+        font-size: 24px;
+    }
+
+    .deletebutton {
+        background-color: red;
+        display: inline-block;
+        color: white;
+        padding: 12px 34px;
+        font-size: 24px;
+        margin: 0;
+        position: absolute;
+        top: 600px;
+        left: 760px;
+        cursor: pointer;
+    }
+</style>
+<br />
+<br />
+<br />
+<br />
+<!--STILL NEEDS TO BE DONE. CONNECT TO DB TO SHOW CONTENT ON TABLES HERE.-->
+<div class="tickets">
+    <h1>Tickets</h1>
+</div>
 
 <div class="row">
     <div class="col-md">
         <div class="card card-body">
-            <h5>Tickets</h5>
-        </div>
-        <div class="card card-body">
+            <a class="label ">All Tickets</a>
             <table class="table">
                 <tr>
-                    <th>Ticket ID</th>
+                    <th>Ticket IDs</th>
                     <th>Title</th>
                     <th>Description</th>
                     <th>Category</th>
@@ -21,11 +57,36 @@
                     <th>Assigned To</th>
                     <th>Created By</th>
                 </tr>
-                
+
             </table>
         </div>
     </div>
-    
+
 </div>
+<br />
+<br />
+<div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+            <a class="label ">My Tickets Submitted</a>
+            <table class="table">
+                <tr>
+                    <th>Ticket IDs</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th>Urgency</th>
+                    <th>Date Created</th>
+                    <th>Assigned To</th>
+                    <th>Created By</th>
+                </tr>
+
+            </table>
+        </div>
+    </div>
+
+    <a href="\deleteTicket" class="deletebutton"> Delete Ticket </a>
+</div>
+
 
 {% endblock %}

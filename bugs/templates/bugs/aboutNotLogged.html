@@ -1,18 +1,43 @@
 {% extends 'bugs/main.html' %}
 {% load static %}
 {% block content %}
-{% include 'bugs/navbar.html' %}
+
 <br>
 <br>
-<br />
-<br />
-<br />
-<br />
+
 <style>
 
     .about p {
         color: white;
         text-align: center;
+    }
+
+    .gobackbutton {
+        display: inline-block;
+        color: white;
+        border: 1px solid white;
+        background: transparent;
+        padding: 12px 34px;
+        font-size: 24px;
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 40%;
+        cursor: pointer;
+    }
+
+    .loginb2 {
+        display: inline-block;
+        color: white;
+        border: 1px solid white;
+        background: transparent;
+        padding: 12px 34px;
+        font-size: 24px;
+        margin: 0;
+        position: absolute;
+        top: 60%;
+        left: 45%;
+        cursor: pointer;
     }
 </style>
 
@@ -38,9 +63,14 @@
 
     </p>
 
+    <img src="{% static 'bugs/images/palmtechLogoSmall.png' %}">
+    
+    <img src="{% static 'bugs/images/palmtechLogoSmall.png' %}" style="position:relative;left:488px;">
     
 
-    <img src="{% static 'bugs/images/palmtechLogoSmall.png' %}" style="position:relative;left:580px;">
+    <a href="\main" class="gobackbutton"> Go back to home page </a>
+    <a href="\login" class="loginb2"> Login </a>
 </div1>
+
 {% endblock %}
 
