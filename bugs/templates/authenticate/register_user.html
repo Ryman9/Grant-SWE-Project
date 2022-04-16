@@ -18,7 +18,7 @@
         text-align: center;
         padding: 20px;
         font-size: 60px;
-        border:none;
+        border: none;
     }
 
     h2 {
@@ -41,6 +41,7 @@
         left: 40%;
         cursor: pointer;
     }
+
     .moveimage {
         top: -6%;
         left: -4%;
@@ -50,28 +51,28 @@
 
 <div class="shadow p-4 mb-5 bg-body rounded">
 
-<h1>
-    Welcome to Bug Tracker!
-</h1>
+    <h1>
+        Welcome to Bug Tracker!
+    </h1>
 
-<h2>Register New User </h2>
-<img class="moveimage" img src="{% static 'bugs/images/palmtechLogoSmall.png' %}">
-<br />
-<br />
+    <h2>Register New User </h2>
+    <img class="moveimage" img src="{% static 'bugs/images/palmtechLogoSmall.png' %}">
+    <br />
+    <br />
 
 
-<form action="{% url 'register_user' %}" method=POST>
-    {% csrf_token %}
-    <br /><br /><br /><br />
-    {{form.as_p}}
+    <form action="{% url 'register_user' %}" method=POST>
+        {% csrf_token %}
+        <br /><br /><br /><br />
+        {{form.as_p}}
 
-    <br /><br /><br /><br />
-    <input type="submit"
-           valie="Submit" c;ass="btn btn-secondary" />
+        <br /><br /><br /><br />
+        <input type="submit"
+               valie="Submit" c;ass="btn btn-secondary" />
 
-</form>
-<a href="\main" class="gobackbutton"> Go back to home page </a>
-    </div>
+    </form>
+    <a href="\main" class="gobackbutton"> Go back to home page </a>
+</div>
 <br />
 <br />
     {% endblock %}

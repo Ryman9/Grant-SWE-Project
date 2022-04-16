@@ -18,22 +18,44 @@
 <br>
 
 <style>
-	#recent {
-		padding-left: 240px;
-	}
+    #recent {
+        background-color: #89d4cf;
+        background-image: linear-gradient(315deg, #89d4cf 0%, #6e45e1 74%);
+        padding-left: 240px;
+		
+    }
 
 	#ticketAssigned {
 		padding-left: 400px;
 	}
+    #buttondash {
+        background-color: #000000;
+        background-image: linear-gradient(147deg, #000000 0%, #04619f 74%);
+        color: white;
+        border: none;
+        font-weight: bold;
+        
+    }
+    #ticketAssigned {
+        background-color: #89d4cf;
+        background-image: linear-gradient(315deg, #89d4cf 0%, #6e45e1 74%);
+        padding-left: 380px;
+    }
+
+    #ticketSubmit {
+        background-color: #89d4cf;
+        background-image: linear-gradient(315deg, #89d4cf 0%, #6e45e1 74%);
+		text-align:center;
+    }
 </style>
 
 <!--STILL NEEDS TO BE DONE. CONNECT TO DB TO SHOW CONTENT ON TABLES HERE.-->
 <div class="row">
 	<div class="col-md-5">
-		<h5 id="recent">RECENT UPDATES</h5>
+		<h5 id="recent">RECENT UPDATES TO TICKETS</h5>
 		<hr>
 		<div class="card card-body">
-			<a class="btn btn-primary  btn-sm btn-block" href="\updateTicket">Create Update</a>
+			<a class="btn btn-primary  btn-sm btn-block" id = "buttondash" href="\updateTicket">Create Update</a>
 
 			<table class="table table-sm">
 				<tr>
@@ -48,13 +70,37 @@
 	</div>
 
 	<div class="col-md-7">
-		<h5 id="ticketAssigned">ASSIGNED TICKETS</h5>
+		<h5 id="ticketSubmit">MY TICKETS SUBMITTED</h5>
 		<hr>
 		<div class="card card-body">
 
-			<a class="btn btn-primary  btn-sm btn-block" href="\createTicket">Create Tickets</a>
+			<a class="btn btn-primary  btn-sm btn-block" id = "buttondash" href="\createTicket">Create Ticket</a>
 
+
+			<table class="table table-sm">
+				<tr>
+					<th>Title</th>
+					<th>Date Created</th>
+					<th>Category</th>
+					<th>Status</th>
+					<th>Urgency</th>
+					<th>Assigned To</th>
+					<th>Created By</th>
+				</tr>
+
+			</table>
+		</div>
+	</div>
 	
+	<div class="col-md-7">
+		<br />
+		<h5 id="ticketAssigned">TICKETS ASSIGNED TO ME</h5>
+		<hr>
+		<div class="card card-body">
+
+			<a class="btn btn-primary  btn-sm btn-block" id = "buttondash" href="\updateTicket">Update Ticket</a>
+
+
 			<table class="table table-sm">
 				<tr>
 					<th>Title</th>
