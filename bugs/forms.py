@@ -14,6 +14,7 @@ class TicketForm(ModelForm):
 		super(TicketForm,self).__init__(*args,**kwargs)
 
 		self.fields['title'].widget.attrs['class'] = 'form-control'
+		self.fields['description'].widget = forms.Textarea()
 		self.fields['description'].widget.attrs['class'] = 'form-control'
 		self.fields['description'].required = False
 		self.fields['status'].widget.attrs['class'] = 'custom-select'

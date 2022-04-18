@@ -163,14 +163,16 @@ def register_user(request):
   return render(request,'authenticate/register.html',{'form':form})
 
 # TICKETS
-def searchTickets(request, category="", urgency="", createDate="", createUser="", assignUser=""):
+def searchTickets(request, id=-1, category="", urgency="", createDate="", createUser="", assignUser=""):
     res = Ticket.objects.all()
+    if id > -1:
+        res = res.filter(ticketId__exact=id)
     if len(category) > 0:
-        res = res.filter(Q(category__equals=category))
+        res = res.filter(category__exact=category)
     if len(urgency) > 0:
-        res = res.filter(Q(urgency__equals=urgency))
+        res = res.filter(urgency__exact=urgency)
     if len(createDate) > 0:
-        res = res.filter(Q(timestamp__equals=createDate))
+        res = res.filter(timestamp__exact=createDate)
 
     if len(createUser) > 0:
         createUsernames = Employee.objects.filter(username__exact=createUser)
@@ -200,4 +202,15 @@ def submitTicket(request):
             # category = form.cleaned_data['category']
             # urgency = form.cleaned_data['urgency']
             messages.success(request, ("Ticket submitted"))
+    return redirect('dashboard')
+
+def ticketPage(request, id):
+    id1 = int(id)
+    context = {"ticket": searchTickets(request, id=id1)[0]}
+    return render(request,'bugs/ticket_details.html',context)
+
+def ticket_delete(request, id):
+    id1 = int(id)
+    t = searchTickets(request, id=id1)[0]
+    t.delete()
     return redirect('dashboard')
