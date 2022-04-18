@@ -5,11 +5,10 @@ urlpatterns = [
     # pages
     path('', views.homePage, name="home"),
     path('about/', views.aboutPage, name="about"),
-    path('tickets/', views.ticketsPage),
+    path('tickets/', views.ticketsPage, name="tickets"),
     path('dashboard/', views.dashboardPage, name="dashboard"),
     path('login/', views.loginPage, name="login"),
     path('register/', views.registerPage, name="register"),
-    path('aboutNotLogged/', views.aboutNotLoggedPage),
     path('createTicket/', views.createTicketPage),
     path('updateTicket/', views.updateTicketPage),
     path('deleteTicket/', views.deleteTicketPage),

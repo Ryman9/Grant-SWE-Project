@@ -14,7 +14,9 @@ def homePage(request):
     context = {"updates": Update.objects.all()}
     context["logged_in"] = request.user.is_authenticated
     if request.user.is_authenticated:
-        context["tickets"] = searchTickets()
+        context["totalTickets"] = len(searchTickets(request))
+        context["createTickets"] = searchTickets(request, createUser=request.user.username)
+        context["assignTickets"] = searchTickets(request, assignUser=request.user.username)
         return render(request, 'bugs/dashboard.html', context)
     else:
         return render(request, 'bugs/landing.html')
@@ -28,12 +30,8 @@ def dashboardPage(request):
 def ticketsPage(request):
     return render(request, 'bugs/tickets.html')
 
-@login_required(login_url="/login")
 def aboutPage(request):
     return render(request, 'bugs/about.html')
-
-def aboutNotLoggedPage(request):
-    return render(request, 'bugs/aboutNotLogged.html')
 
 # LOGIN
 def loginPage(request):
@@ -118,33 +116,46 @@ def deleteTicketPage(request):
 def login_user(request):
    if request.method == "GET":
         form = LoginUserForm(request.GET)
-        username = form.cleaned_data['username']
-        password = form.cleaned_data['password']
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            # Redirect to a success page.
-            return redirect('dashboard')
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('dashboard')
+            else:
+                messages.success(request, ("Error logging in. Try again."))
+                return redirect('login')
         else:
             messages.success(request, ("Error logging in. Try again."))
             return redirect('login')
    else:
-	    return render(request,'login.html',{})
+	    return render(request,'login.html')
 
 def logout_user(request):
     logout(request)
-    messages.success(request, ("Logged out successfully!"))
+    messages.success(request, ("Logged out."))
     return redirect('home')
 
 def register_user(request):
   if request.method == "GET":
     form = RegisterUserForm(request.GET)
     if form.is_valid():
-        form.save()
+        firstName = form.cleaned_data["first_name"]
+        lastName = form.cleaned_data["last_name"]
+        position = form.cleaned_data["position"]
+        department = form.cleaned_data["department"]
         username = form.cleaned_data['username']
         password = form.cleaned_data['password1']
+
+        employee = Employee.objects.create(firstName=firstName, lastName=lastName, username=username, position=position, department=department)
+        employee.save()
+
+        form.save()
+
         user = authenticate(username=username, password=password)
         login(request, user)
+
         messages.success(request, ("Your registration is complete!"))
         return redirect('dashboard')
   else:
@@ -152,7 +163,7 @@ def register_user(request):
   return render(request,'authenticate/register.html',{'form':form})
 
 # TICKETS
-def searchTickets(category="", urgency="", createDate="", createUser=-1, assignUser=-1):
+def searchTickets(request, category="", urgency="", createDate="", createUser="", assignUser=""):
     res = Ticket.objects.all()
     if len(category) > 0:
         res = res.filter(Q(category__equals=category))
@@ -160,10 +171,23 @@ def searchTickets(category="", urgency="", createDate="", createUser=-1, assignU
         res = res.filter(Q(urgency__equals=urgency))
     if len(createDate) > 0:
         res = res.filter(Q(timestamp__equals=createDate))
-    if createUser > 0:
-        res = res.filter(Q(createdBy_id__equals=createUser))
-    if assignUser > 0:
-        res = res.filter(Q(assignedTo_id__equals=assignUser))
+
+    if len(createUser) > 0:
+        createUsernames = Employee.objects.filter(username__exact=createUser)
+        createUser1 = -1
+        if len(createUsernames) > 0:
+            createUser1 = createUsernames[0].userId
+        if createUser1 > -1:
+            res = res.filter(createdBy_id__exact=createUser1)
+
+    if len(assignUser) > 0:
+        assignUsernames = Employee.objects.filter(username__exact=assignUser)
+        if len(assignUsernames) > 0:
+            assignUser1 = assignUsernames[0].userId
+        assignUser1 = -1
+        if assignUser1 > -1:
+            res = res.filter(Q(assignedTo_id__exact=assignUser1))
+
     return res
 
 def submitTicket(request):

@@ -2,6 +2,9 @@
 {% block content %}
 <!--User dashboard-->
 <style>
+	h5 {
+		text-align: center;
+	}
 	#recent {
 		background-color: #89d4cf;
 		background-image: linear-gradient(315deg, #89d4cf 0%, #6e45e1 74%);
@@ -10,7 +13,7 @@
 	#ticketAssigned {
 		padding-left: 400px;
 	}
-	#buttondash {
+	.buttondash {
 		background-color: #000000;
 		background-image: linear-gradient(147deg, #000000 0%, #04619f 74%);
 		color: white;
@@ -20,23 +23,21 @@
 	#ticketAssigned {
 		background-color: #89d4cf;
 		background-image: linear-gradient(315deg, #89d4cf 0%, #6e45e1 74%);
-		padding-left: 380px;
 	}
 	#ticketSubmit {
 		background-color: #89d4cf;
 		background-image: linear-gradient(315deg, #89d4cf 0%, #6e45e1 74%);
-		text-align:center;
 	}
 </style>
 
 {% include 'bugs/status.html' %}
 
 <div class="row">
-	<div class="col-md-5">
+	<div class="col">
 		<h5 id="recent">Ticket Updates</h5>
 		<hr>
 		<div class="card card-body">
-			<a class="btn btn-primary btn-sm btn-block" id="buttondash" href="/updateTicket">Create Update</a>
+			<a class="btn btn-primary btn-sm btn-block buttondash" href="/updateTicket">Create Update</a>
 			<table class="table table-sm">
 				<tr>
 					<th></th>
@@ -44,15 +45,28 @@
 					<th>Ticket</th>
 					<th>Update</th>
 				</tr>
+				{% for ticket in assignTickets %}
+				<tr>
+					<td>{{ticket.title}}</td>
+					<td>{{ticket.timestamp}}</td>
+					<td>{{ticket.category}}</td>
+					<td>{{ticket.status}}</td>
+					<td>{{ticket.urgency}}</td>
+					<td>{{ticket.createdBy}}</td>
+					<td>{{ticket.assignedTo}}</td>
+				</tr>
+				{% endfor %}
 			</table>
 		</div>
 	</div>
+</div>
 
-	<div class="col-md-7">
+<div class="row" style="padding-top:48px">
+	<div class="col">
 		<h5 id="ticketSubmit">My Submitted Tickets</h5>
 		<hr>
 		<div class="card card-body">
-			<a class="btn btn-primary  btn-sm btn-block" id = "buttondash" href="/createTicket">Create Ticket</a>
+			<a class="btn btn-primary btn-sm btn-block buttondash" href="/createTicket">Create Ticket</a>
 			<table class="table table-sm">
 				<tr>
 					<th>Title</th>
@@ -63,16 +77,26 @@
 					<th>Assigned To</th>
 					<th>Created By</th>
 				</tr>
+				{% for ticket in createTickets %}
+				<tr>
+					<td>{{ticket.title}}</td>
+					<td>{{ticket.timestamp}}</td>
+					<td>{{ticket.category}}</td>
+					<td>{{ticket.status}}</td>
+					<td>{{ticket.urgency}}</td>
+					<td>{{ticket.createdBy}}</td>
+					<td>{{ticket.assignedTo}}</td>
+				</tr>
+				{% endfor %}
 			</table>
 		</div>
 	</div>
 
-	<div class="col-md-7">
-		<br />
+	<div class="col">
 		<h5 id="ticketAssigned">My Assigned Tickets</h5>
 		<hr>
 		<div class="card card-body">
-			<a class="btn btn-primary btn-sm btn-block" id="buttondash" href="/updateTicket">Update Ticket</a>
+			<a class="btn btn-primary btn-sm btn-block buttondash" href="/updateTicket">Update Ticket</a>
 			<table class="table table-sm">
 				<tr>
 					<th>Title</th>
@@ -83,15 +107,15 @@
 					<th>Assigned To</th>
 					<th>Created By</th>
 				</tr>
-				{% for ticket in tickets %}
+				{% for ticket in assignTickets %}
 				<tr>
 					<td>{{ticket.title}}</td>
-					<td>Date Created</td>
-					<td>Category</td>
-					<td>Status</td>
-					<td>Urgency</td>
-					<td>Assigned To</td>
-					<td>Created By</td>
+					<td>{{ticket.timestamp}}</td>
+					<td>{{ticket.category}}</td>
+					<td>{{ticket.status}}</td>
+					<td>{{ticket.urgency}}</td>
+					<td>{{ticket.createdBy}}</td>
+					<td>{{ticket.assignedTo}}</td>
 				</tr>
 				{% endfor %}
 			</table>

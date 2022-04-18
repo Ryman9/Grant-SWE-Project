@@ -47,15 +47,6 @@
       <li class="nav-item">
         <a class="nav-link" href="/about">About</a>
       </li>
-      {% if user.is_authenticated %}
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'logout' %}"><b>Log Out</b></a>
-      </li>
-      {% else %}
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'login' %}"><b>Log In</b></a>
-      </li>
-      {% endif %}
     </ul>
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
@@ -64,6 +55,15 @@
           {{user.last_name}}
         </a>
       </li>
+      {% if user.is_authenticated %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+      </li>
+      {% else %}
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'login' %}">Log In</a>
+      </li>
+      {% endif %}
     </ul>
   </div1>
 </nav>
