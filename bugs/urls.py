@@ -2,23 +2,21 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-
-    path('', views.main),
-    path('tickets/', views.tickets),
-    path('about/', views.about),
-    path('dashboard/',views.dashboard,name = "dashboard"),
-    path('main/',views.main,name = "main"),
-    path('login/',views.login),
-    path('aboutNotLogged/', views.aboutNotLogged),
-    path('homePage/',views.homePage, name ="homePage"),
-    path('createTicket/',views.createTicket),
-    path('updateTicket/',views.updateTicket),
-    path('deleteTicket/',views.deleteTicket),
-    path('', views.home, name='home'),
-    path('tickets/', views.tickets),
-    path('about/', views.about),
-    path('login_user', views.login_user, name = "login"),
-    path('logout_user',views.logout_user, name = 'logout'),
-    path('register_user',views.register_user, name ='register_user')
-
+    # pages
+    path('', views.homePage, name="home"),
+    path('about/', views.aboutPage, name="about"),
+    path('tickets/', views.ticketsPage),
+    path('dashboard/', views.dashboardPage, name="dashboard"),
+    path('login/', views.loginPage, name="login"),
+    path('register/', views.registerPage, name="register"),
+    path('aboutNotLogged/', views.aboutNotLoggedPage),
+    path('createTicket/', views.createTicketPage),
+    path('updateTicket/', views.updateTicketPage),
+    path('deleteTicket/', views.deleteTicketPage),
+    path('tickets/', views.ticketsPage),
+    # backend
+    path('submit_ticket/', views.submitTicket),
+    path('login_user/', views.login_user),
+    path('logout_user/', views.logout_user, name='logout'),
+    path('register_user/', views.register_user, name='register_user'),
 ]

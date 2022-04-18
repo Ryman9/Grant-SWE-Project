@@ -17,26 +17,20 @@ class Ticket(models.Model):
         ('Created', 'Created'),
         ('In Progress', 'In Progress'),
         ('Completed', 'Completed'),
-    )
-
-    # for categories, wasn't sure what all to include for now
-    # can be easily modified by adding tuples here
-    CATEGORY = (
-        ('Front End', 'Front End'),
-        ('Back End', 'Back End'),
+        ('Void', 'Void'),
     )
 
     URGENCY = (
-        ('Red', 'Red'),
-        ('Yellow', 'Yellow'),
         ('Green', 'Green'),
+        ('Yellow', 'Yellow'),
+        ('Red', 'Red'),
     )
 
     ticketId = models.AutoField(primary_key=True)
     title = models.CharField(max_length=80, null=True)
     description = models.CharField(max_length=255, null=True)
     status = models.CharField(max_length=100, null=True, choices=STATUS)
-    category = models.CharField(max_length=20, null=True, choices=CATEGORY)
+    category = models.CharField(max_length=20, null=True)
     urgency = models.CharField(max_length=50, null=True, choices=URGENCY)
     timestamp = models.DateTimeField(auto_now_add=True, null=True)
     createdBy = models.ForeignKey(Employee, null=True, on_delete=models.SET_NULL, related_name='createdBy')

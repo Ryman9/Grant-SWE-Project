@@ -1,0 +1,119 @@
+{% load static %}
+
+<!-- Antonio: Design of front end system. Design of UI and website structure and links. User login and user regstration system.-->
+<!-- Design of forms and templates for front end.-->
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>BugTracker</title>
+	<link rel="stylesheet" href="{% static 'bootstrap.min.css' %}" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<link rel="icon" href= "{% static 'bugs/images/palmtechLogoSmall.png' %}">
+	<style>
+		#logo {
+		}
+		#total-orders {
+			background-image: linear-gradient(135deg, #81FBB8 10%, #28C76F 100%);
+		}
+		#orders-delivered {
+			background-color: #0093E9;
+			background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
+		}
+		#orders-pending {
+			background-color: #FBAB7E;
+			background-image: linear-gradient(62deg, #FBAB7E 0%, #F7CE68 100%);
+		}
+		h1 {
+			color: black;
+			text-align: center;
+			padding: 20px;
+			border: 2px solid black;
+		}
+		body {
+			min-height: 100vh;
+			width: 100%;
+			background: linear-gradient(rgba(0,0,0,0.25) 100%, rgba(0,0,0,0.25) 100%), url("/static/bugs/images/background.png");
+			background-position: center;
+			background-size: cover;
+			position: relative;
+		}
+		#logo1 {
+			padding-left: 620px;
+			padding-top: 0px;
+		}
+		.intro {
+			color: white;
+			text-align: center;
+			position: absolute;
+		}
+		.intro h2 {
+			color: white;
+			text-align: center;
+			padding: 20px;
+			font-size: 60px;
+		}
+		.intro p1 {
+			color: white;
+			margin: 10px 0 40px;
+			font-size: 16px
+		}
+		.learnbutton {
+			display: inline-block;
+			color: white;
+			border: 1px solid white;
+			background: transparent;
+			padding: 12px 34px;
+			font-size: 14px;
+			position: relative;
+			cursor: pointer;
+		}
+		.loginbutton {
+			display: inline-block;
+			color: white;
+			border: 1px solid white;
+			background: transparent;
+			padding: 12px 34px;
+			font-size: 14px;
+			position: relative;
+			cursor: pointer;
+		}
+    .centered {
+      margin: auto;
+      padding: 15px;
+      width: 100%;
+    }
+    form label {
+        padding-right: 8px;
+    }
+	</style>
+</head>
+<body>
+	{% include "bugs/navbar.html" %}
+	<div class="container-fluid">
+		<div style="width:100%;height:120px"></div>
+		{% if messages %}
+		<div class="row">
+			{% for message in messages %}
+			<div class="alert alert-warning alert-dismissible fade show" role="alert">
+				{{message}}
+				<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			{% endfor %}
+		</div>
+		{% endif %}
+		{% block content %}
+		{% endblock %}
+		<div style="width:100%;height:100px"></div>
+	</div>
+	<footer>
+		<center>
+			<p><a href="#">Privacy Policy</a> &verbar; &copy; 2022 Palm Technologies, LLC.</p>
+		</center>
+	</footer>
+	<script src="{% static 'jquery-3.4.1.slim.min.js' %}" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+	<script src="{% static 'popper.min.js' %}" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="{% static 'bootstrap.min.js' %}" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</body>
+</html>

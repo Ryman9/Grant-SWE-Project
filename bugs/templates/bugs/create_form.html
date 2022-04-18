@@ -1,90 +1,50 @@
-{% extends 'bugs/main.html' %}
-<<<<<<< HEAD
-
+{% extends 'bugs/base.html' %}
 {% block content %}
-<style>
-    h2 {
-        color: black;
-        text-align: center;
-        padding: 20px;
-        font-size: 60px;
-    }
-
-    .gobackbutton {
-        display: inline-block;
-        color: black;
-        border: 1px solid black;
-        background: transparent;
-        padding: 12px 34px;
-        font-size: 24px;
-        margin: 0;
-        position: absolute;
-        top: 80%;
-        left: 40%;
-        cursor: pointer;
-    }
-</style>
-<h2>Create A Ticket</h2>
-<br />
-<br />
-
-
-<form action="" method=POST>
-    {% csrf_token %}
-
-
-    <div class="form-row">
-        <div class="form-group col-md-6">
-            <label for="inputTicketName">Create a title for your ticket</label>
-            <input type="text" class="form-control" id="inputtext" placeholder="Game bug, graphics bug, ...">
+<div class="row centered" style="max-width: 400px;padding-top:20px">
+    <h2>Create Ticket</h2>
+</div>
+<div class="row centered" style="max-width: 500px">
+    <form action="/submit_ticket" method="GET">
+        {% csrf_token %}
+        <!-- <div class="form-row">
+            <div class="form-group col-md-6">
+                <label for="inputTicketName">Create a title for your ticket</label>
+                <input type="text" class="form-control" id="inputtext" placeholder="Game bug, graphics bug, ...">
+            </div>
+            <div class="form-group col-md-6">
+                <label for="inputPassword4">Enter Category</label>
+                <input type="text" class="form-control" id="inputCategory" placeholder="Category...">
+            </div>
         </div>
         <div class="form-group col-md-6">
-            <label for="inputPassword4">Enter Category</label>
-            <input type="text" class="form-control" id="inputCategory" placeholder="Category...">
+            <label for="exampleFormControlTextarea1">Please describe the problem</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Description..."></textarea>
         </div>
-    </div>
-    <div class="form-group col-md-6">
-        <label for="exampleFormControlTextarea1">Please describe the problem</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Description..."></textarea>
-    </div>
-
-    <div class="form-group col-md-4">
-        <label for="inputUrgency">Urgency/Severity</label>
-        <select id="inputUrgency" class="form-control">
-            <option selected>Choose a level of severity (1-5)</option>
-            <option> 1 - low</option>
-            <option> 2 - medium low</option>
-            <option> 3 - medium</option>
-            <option> 4 - High</option>
-            <option> 5 - Critical </option>
-        </select>
-    </div>
-
-
-    <div class="form-group">
-        <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="gridCheck">
-            <label class="form-check-label" for="gridCheck">
-                Everything is correct?
-            </label>
+        <div class="form-group col-md-4">
+            <label for="inputUrgency">Urgency/Severity</label>
+            <select id="inputUrgency" class="form-control">
+                <option selected>Choose a level of severity</option>
+                <option>1 - Low</option>
+                <option>2 - Medium-low</option>
+                <option>3 - Medium</option>
+                <option>4 - High</option>
+                <option>5 - Critical</option>
+            </select>
         </div>
-    </div>
-    <button type="submit" class="btn btn-primary">Submit Ticket</button>
-</form>
-
-
-
-
-<a href="\dashboard" class="gobackbutton"> Go back to dashboard </a>
-<br />
-<br />
-<!--
-
-
-<form action="" method="POST">
-    {% csrf_token %}
-  
-    <input type="submit" name="Submit">
-</form>
--->
+        <div class="form-group">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="gridCheck">
+                <label class="form-check-label" for="gridCheck">
+                    Everything is correct?
+                </label>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Submit Ticket</button>-->
+        <table>
+        {{form}}
+        <tr><td><hr></td><td><hr></td></tr>
+        <tr><td></td><td><button type="submit" class="btn btn-primary btn-block">Submit</button></td></tr>
+        </table>
+    </form>
+</div>
 {% endblock %}

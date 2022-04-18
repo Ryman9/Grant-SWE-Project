@@ -1,7 +1,6 @@
-{% extends 'bugs/main.html' %}
+{% extends 'bugs/base.html' %}
 {% load static %}
 {% block content %}
-{% include 'bugs/navbar.html' %}
 <br>
 <br>
 <br />
@@ -9,38 +8,31 @@
 <br />
 <br />
 <style>
-
-    .about p {
-        color: white;
-        text-align: center;
-    }
+  .about p {
+    color: white;
+    text-align: center;
+  }
 </style>
 
 <div1 class="about">
-    <h1>About Bug Tracker</h1>
-    <p>
-        Bug tracker allows you to record bugs and other issues within your projects. Now your team of engineers have a fun
-        and easy tool to use for your engineering projects and endeavors! Bug Tracker is easy to use simply follow the following steps
-        1. In the dashboard you have an overall of all the tickets for your project. An overall of all the tickets assigned to you and their attributes are
-        shown to let you know which tickets need work, when it was created, and the urgency to fix. To create your own ticket, simple click <q>
-            Create ticket
-        </q> and you will be taken to the create ticket page to input your ticket. Here in the create ticket page, enter a title and category for
-        your ticket and describe the problem and its urgency. Once you finished, make sure your ticket is filled out completely and correct and then
-        click submit ticket to submit the ticket to the system.
-        To update any tickets in the system, simply click create update to update a ticket. Here input your name and select the ticket ID you want to update
-        Then provide a description of the update to the ticket. In the case that the problem associated with the ticket is resolved, simply click "Problem has been resolved?"
-        Finally click "Update Ticket" to input the update to the system. In the case that you selected <q>Problem has been resolved?</q>, the ticket will automatically be deleted
-        from the system. In the tickets tab you will have any overview of all the tickets in the system and all of their attributes. If you want to delete a ticket here, click
-        <q>Delete Ticket</q> to go to the delete a ticket page.  Here you can input your name and the associated ticket Id you want to delete. Please provide a description as to why
-        you are deleting the ticket and the option to select whether the problem has been resolved. Only administrator users can delete tickets for everyone, so if you cannot delete a
-        ticket assigned to someone else, only the assigned person can. Talk to your administrator about any concerns for deleting a ticket.
-
-
-    </p>
-
-    
-
-    <img src="{% static 'bugs/images/palmtechLogoSmall.png' %}" style="position:relative;left:580px;">
+  <h1>About BugTracker</h1>
+  <p>
+    Bug tracker allows you to record bugs and other issues within your projects. Now your team of engineers have a fun
+    and easy tool to use for your engineering projects and endeavors! Bug Tracker is easy to use simply follow the following steps
+    1. In the dashboard you have an overall of all the tickets for your project. An overall of all the tickets assigned to you and their attributes are
+    shown to let you know which tickets need work, when it was created, and the urgency to fix. To create your own ticket, simple click <q>
+      Create ticket
+    </q> and you will be taken to the create ticket page to input your ticket. Here in the create ticket page, enter a title and category for
+    your ticket and describe the problem and its urgency. Once you finished, make sure your ticket is filled out completely and correct and then
+    click submit ticket to submit the ticket to the system.
+    To update any tickets in the system, simply click create update to update a ticket. Here input your name and select the ticket ID you want to update
+    Then provide a description of the update to the ticket. In the case that the problem associated with the ticket is resolved, simply click "Problem has been resolved?"
+    Finally click "Update Ticket" to input the update to the system. In the case that you selected <q>Problem has been resolved?</q>, the ticket will automatically be deleted
+    from the system. In the tickets tab you will have any overview of all the tickets in the system and all of their attributes. If you want to delete a ticket here, click
+    <q>Delete Ticket</q> to go to the delete a ticket page.  Here you can input your name and the associated ticket Id you want to delete. Please provide a description as to why
+    you are deleting the ticket and the option to select whether the problem has been resolved. Only administrator users can delete tickets for everyone, so if you cannot delete a
+    ticket assigned to someone else, only the assigned person can. Talk to your administrator about any concerns for deleting a ticket.
+  </p>
+  <img src="{% static 'bugs/images/palmtechLogoSmall.png' %}" style="position:relative;left:580px;">
 </div1>
 {% endblock %}
-

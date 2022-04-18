@@ -1,0 +1,29 @@
+{% extends 'bugs/base.html' %}
+{% load static %}
+{% block content %}
+
+<!--Antonio: Register a new user into the system with this page-->
+{% if form.errors %}
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <p>Please fix these errors and try again.</p>
+    <p>{{form.errors}}</p>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+{% endif %}
+
+<div class="row centered" style="max-width: 400px;padding-top:20px">
+    <h2>Register New Account</h2>
+</div>
+<div class="row centered" style="max-width: 500px">
+    <form method="GET" action="/register_user">
+        {% csrf_token %}
+        <table>
+        {{form}}
+        <tr><td><hr></td><td><hr></td></tr>
+        <tr><td></td><td><button type="submit" class="btn btn-primary btn-block">Submit</button></td></tr>
+        </table>
+    </form>
+</div>
+{% endblock %}

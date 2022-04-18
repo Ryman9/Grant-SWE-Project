@@ -3,37 +3,27 @@
 {% block content %}
 <html>
 <body>
-
     <div>
         <section class="header1">
             <h3 id="logo1">
                 <a href="/main">
-                    <img src="{% static 'bugs/images/palmtechLogoSmall.png' %}"
-                         width="400"
-                         height="400">
+                    <img src="{% static 'bugs/images/palmtechLogoSmall.png' %}" width="400" height="400">
                 </a>
             </h3>
             <div class="intro">
                 <h2>Welcome to Bug Tracker developed by Palm Technologies</h2>
-
-                <p1>
+                <p>
                     Our team at Palm Technlogies is excited to introduce our new BugTracker software that will allow
                     you and your team of engineers to keep track of bugs in your engineering projects. Simple and easy to use,
-                    BugTracker allows you to simply create a ticket of your bug and assign it to a member of your team to keep track of.<br>
-                    <br><br><br>
-                </p1>
+                    BugTracker allows you to simply create a ticket of your bug and assign it to a member of your team to keep track of.
+                </p>
+                <br><br><br><br
                 <a href="\about" class="learnbutton"> Learn More </a>
                 <br><br>
                 <a href="{% url 'dashboard' %}" class="loginbutton"> Go to User Dashboard </a>
-
             </div>
-
-
         </section>
         {% endblock %}
     </div>
-
-
 </body>
-
 </html>

@@ -1,87 +1,20 @@
-{% extends 'bugs/main.html' %}
+{% extends 'bugs/base.html' %}
 {% load static %}
 {% block content %}
 <!--Antonio: login button leads to login system-->
-<br>
-<br>
-
-<style>
-
-
-    h2 {
-        color: white;
-        text-align: center;
-        padding: 20px;
-        font-size: 60px;
-    }
-
-    p {
-        color: white;
-        text-align: center;
-        padding: 20px;
-        font-size: 16px;
-    }
-    .loginb{
-        display: inline-block;
-        color: white;
-        border: 1px solid white;
-        background: transparent;
-        padding: 12px 34px;
-        font-size: 24px;
-        margin: 0;
-        position: absolute;
-        top: 72%;
-        left: 46%;
-        cursor: pointer;
-    }
-    .goback {
-        display: inline-block;
-        color: black;
-        border: 1px solid black;
-        background: transparent;
-        padding: 12px 34px;
-        font-size: 16px;
-        margin: 0;
-        position: absolute;
-        top: 2%;
-        left: 2%;
-        cursor: pointer;
-    }
-    .learnmore {
-        display: inline-block;
-        color: black;
-        border: 1px solid black;
-        background: transparent;
-        padding: 12px 34px;
-        font-size: 16px;
-        margin: 0;
-        position: absolute;
-        top: 2%;
-        left: 90%;
-        cursor: pointer;
-    }
-</style>
-<div class="login page">
-    <h3 id="logo1">
-        <a href="/main">
-            <img src="{% static 'bugs/images/palmtechLogoSmall.png' %}"
-                 width="400"
-                 height="400">
-        </a>
-    </h3>
-    <h2>User Login</h2>
-    <p> Please login to <em>BUG TRACKER</em></p>
-    <br>
-
-    <a href="\main" class="goback"> Go back to home page </a>
-    <br> <br>
-    <a href="\aboutNotLogged" class="learnmore"> Learn more </a>
-    <br> <br> 
-    <a href="{% url 'login' %}" class="loginb"> Login </a>
-
-
-
+<div class="row centered" style="max-width: 400px;padding-top:20px">
+    <h2>Log into BugTracker</h2>
 </div>
-
-
+<div class="row centered" style="max-width: 350px">
+    <form method="GET" action="/login_user">
+        {% csrf_token %}
+        <table>
+        {{form}}
+        <tr><td><hr></td><td><hr></td></tr>
+        <tr><td></td><td><button type="submit" class="btn btn-primary btn-block">Log in</button></td></tr>
+        <tr><td><hr></td><td><hr></td></tr>
+        <tr><td></td><td><a class="btn btn-success btn-block" href="/register" role="button">Register</a></td></tr>
+        </table>
+    </form>
+</div>
 {% endblock %}
