@@ -1,7 +1,6 @@
 {% extends 'bugs/base.html' %}
-{% block content %}
 {% load static %}
-{% include 'bugs/navbar.html' %}
+{% block content %}
 <script>document.title = "{{user.username}} - BugTracker";</script>
 <style>
   .avatar {
@@ -10,28 +9,28 @@
       margin-right:auto;
   }
 </style>
-<div class="row">
-  <h2 style="text-align:center; color:white">Profile</h2>
-  <div class="media">
-    <img src="{% static 'bugs/images/profile.png' %}" class="avatar" width="100" height="100">
-    <div class="media-body">
-      <div class="row">
-        <div class="col">
-          <p for="full name">{{user.firstName}} {{user.lastName}}</p>
-        </div>
-        <div class="">
-          <div class="row">
-            <p for="full name">{{user.username}}</p>
-          </div>
-          <div class="row">
-            <p for="position">{{user.position}}</p>
-          </div>
-          <div class="row">
-            <p for="department">{{user.department}}</p>
-          </div>
-        </div>
-      </div>
-    </div>
+
+<div class="row text-white" style="width:100%;padding-top:20px">
+  <div style="margin-left:auto;margin-right:auto;width:100%;text-align:center;">
   </div>
+</div>
+
+<div class="text-white" style="width:100%">
+  <table style="margin-left:auto;margin-right:auto;max-width:400px">
+    <tr style="text-align:center">
+      <td><img src="{% static 'bugs/images/palmtechLogo.png' %}" class="avatar" width="100" height="100"></td>
+      <td style="padding-left:16px"><h1 style="margin:0;padding:0">{{user.firstName}} {{user.lastName}}</h1>
+        <h3 style="margin:0;padding:0">{{user.username}}</h3></td>
+    </tr>
+    <tr><td><hr></td><td><hr></td></tr>
+    <tr>
+      <td><small>Position</small></td>
+      <td style="text-align:right">{{user.position}}</td>
+    </tr>
+    <tr>
+      <td><small>Department</small></td>
+      <td style="text-align:right">{{user.department}}</td>
+    </tr>
+  </table>
 </div>
 {% endblock %}

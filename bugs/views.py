@@ -51,6 +51,13 @@ def ticketDetailsPage(request, id):
     context["users"] = valuesListToList(Employee.objects.values_list("username"))
     return render(request,'bugs/ticket_details.html',context)
 
+def updateDetailsPage(request, id):
+    id1 = int(id)
+    context = {"update": Update.objects.filter(updateId__exact=id1)[0]}
+    context["ticket"] = context["update"]
+    context["users"] = valuesListToList(Employee.objects.values_list("username"))
+    return render(request,'bugs/update_details.html',context)
+
 # LOGIN
 def loginPage(request):
     return render(request, 'bugs/login.html', context={"form": LoginUserForm()})
@@ -61,79 +68,44 @@ def registerPage(request):
 @login_required(login_url="/login")
 def profilePage(request, id):
     res = Employee.objects.all().filter(username=id)[0]
+    res.is_authenticated = True
     return render(request, 'bugs/profile.html', {'user': res})
 
 # TICKETS
 @login_required(login_url="/login")
 def createTicketPage(request):
-    return render(request,'bugs/create_form.html', context={"form": TicketForm()})
+    return render(request,'bugs/create_ticket.html', context={"form": TicketForm()})
 
 @login_required(login_url="/login")
 def updateTicketPage(request):
-    return render(request,'bugs/update_form.html')
+    return render(request,'bugs/update_ticket.html')
 
 @login_required(login_url="/login")
 def deleteTicketPage(request):
-    return render(request,'bugs/delete_form.html')
+    return render(request,'bugs/delete_ticket.html')
 
-#Antonio - commented out due to merge of two different code bases
-#@csrf_exempt
-#def createTicket(request):
-    #form = TicketForm
-   # if request.method == 'POST':
-    #    form = TicketForm(request.POST)
-     #   if form.is_valid():
-      #      form.save()
-       #     return redirect('/')
+# UPDATES
+@login_required(login_url="/login")
+def createUpdatePage(request):
+    return render(request,'bugs/create_update.html', context={"form": UpdateForm()})
 
-   # context = {'form':form}
-    #return render(request, 'bugs/create_form.html', context)
+def submit_update(request):
+    if request.method == "GET":
+        form = UpdateForm(request.GET)
+        if form.is_valid():
+            form.save()
+            # title = form.cleaned_data['title']
+            # category = form.cleaned_data['category']
+            # urgency = form.cleaned_data['urgency']
+            messages.success(request, ("Update submitted"))
+    return redirect('dashboard')
 
-# @csrf_exempt
-#def updateTicket(request, pk):
- #   ticket = Ticket.objects.get(id=pk)
-  #  form = TicketForm(instance=ticket)
-
-   # if request.method == 'POST':
-    #    form = TicketForm(request.POST, instance=ticket)
-     #   if form.is_valid():
-      #      form.save()
-       #     return redirect('/')
-
-  #  context = {'form':form}
-   # return render(request, 'bugs/create_form.html', context)
-
-#@csrf_exempt
-#def deleteTicket(request, pk):
- #   ticket = Ticket.objects.get(id=pk)
-  #  if request.method == "DELETE":
-   #     ticket.delete()
-    #    return redirect('/')
-
-    #context = {'item':ticket}
-    #return render(request, 'bugs/delete_form.html', context)
-
-#@csrf_exempt
-#def createUpdate(request):
- #   form = UpdateForm
-  #  if request.method == "POST":
-   #     form = UpdateForm(request.POST)
-   #     if form.is_valid():
-    #        form.save()
-    #        return redirect('/')
-
-   # context = {'form':form}
-    #return render(request, 'bugs/create_form.html', context)
-
-#@csrf_exempt
-#def deleteUpdate(request, pk):
- #   update = Update.objects.get(id=pk)
- #   if request.method == "DELETE":
-  #      update.delete()
-   #     return redirect('/')
-
-    #context = {'item':update}
-    #return render(request, 'bugs/delete_form.html', context)
+def delete_update(request, id):
+    id1 = int(id)
+    t = Update.objects.filter(id=id1)[0]
+    if t is not None:
+        t.delete()
+    return redirect('dashboard')
 
 # USERS
 def login_user(request):

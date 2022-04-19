@@ -1,0 +1,20 @@
+{% extends 'bugs/base.html' %}
+{% block content %}
+
+<div class="row text-white" style="width:100%;padding-top:20px">
+  <div style="margin-left:auto;margin-right:auto;width:100%;text-align:center;">
+    <h2>Create Ticket</h2>
+</div>
+
+<div class="row centered text-white" style="max-width: 500px">
+    <form action="/submit_update" method="GET">
+        {% csrf_token %}
+        <table>
+        {{form}}
+        <tr><td><hr></td><td><hr></td></tr>
+        <tr><td></td><td><button type="submit" class="btn btn-primary btn-block">Submit</button></td></tr>
+        </table>
+    </form>
+</div>
+
+{% endblock %}

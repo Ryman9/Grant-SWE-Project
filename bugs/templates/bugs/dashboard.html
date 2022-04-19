@@ -65,29 +65,30 @@
 	</div>
 </div>
 
-<div class="row" style="padding-top:48px">
+<!-- <div class="row" style="padding-top:48px">
 	<div class="col">
 		<div class="card">
 			<div class="card-header">
-				<h5 id="recent"><i class="fas fa-history"></i>&nbsp;Ticket Updates</h5>
+				<h5 id="recent"><i class="fas fa-history"></i>&nbsp;Updates</h5>
 			</div>
 			<div class="card-body">
-				<table class="table table-sm">
+				<a class="btn btn-success btn-md btn-block buttondash" href="/createUpdate"><i class="fas fa-plus"></i>&nbsp;Create Update</a>
+        <table class="table table-sm">
 					<tr>
-						<th>Update</th>
-						<th>Employee</th>
+						<th>ID</th>
 						<th>Ticket</th>
+						<th>Employee</th>
 					</tr>
 					{% for update in updates %}
 					<tr>
 						<td><a href="/update/details/{{update.updateId}}">{{update.updateId}}</a></td>
-						<td><a href="/update/details/{{update.updateId}}">{{update.madeBy}}</a></td>
 						<td><a href="/update/details/{{update.updateId}}">{{update.onTicket}}</a></td>
+						<td><a href="/update/details/{{update.updateId}}">{{update.madeBy}}</a></td>
 					</tr>
 					{% endfor %}
 				</table>
 			</div>
 		</div>
 	</div>
-</div>
+</div> -->
 {% endblock %}

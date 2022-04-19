@@ -1,0 +1,38 @@
+{% extends 'bugs/base.html' %}
+{% load static %}
+{% block content %}
+<script>document.title="Ticket #{{ticket.ticketId}} - BugTracker";</script>
+<div class="row text-white" style="width:100%;padding-top:20px">
+  <div style="margin-left:auto;margin-right:auto;width:100%;text-align:center;">
+      <h2><span class="badge badge-secondary">#{{ticket.ticketId}}</span> {{ticket}}</h2>
+      <h4>Ticket Update Details</h4>
+  </div>
+</div>
+<div class="row centered text-white" style="max-width: 500px">
+    <form action="/update/update/{{ticket.ticketId}}" method="GET">
+        <div class="form-group row">
+            <label for="desc">Description</label>
+            <textarea class="form-control" id="desc" rows="6" cols="60" name="description">{{ticket.description}}</textarea>
+        </div>
+        <div class="form-group row">
+            <label for="cb">Created By</label>
+            <select class="custom-select" id="cb" readonly>
+              <option>{{update.madeBy.username}}</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Update Details</button>
+    </form>
+</div>
+
+<div class="row centered" style="max-width: 500px">
+    <button type="button" class="btn btn-danger btn-block" id="delete-btn">Delete Update</button>
+</div>
+
+<form action="/update/delete/{{update.updateId}}" method="GET" id="delete-form"></form>
+
+<script>
+document.querySelector("#delete-btn").onclick = function() {
+if (confirm("Are you sure you want to delete this update?"))$("#delete-form").submit();
+};
+</script>
+{% endblock %}

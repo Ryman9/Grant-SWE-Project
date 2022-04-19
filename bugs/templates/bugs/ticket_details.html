@@ -21,11 +21,11 @@
         <div class="form-group row">
             <label for="status">Status</label>
             <select id="status" name="status" class="custom-select">
-              <option value="">---------</option>
-              <option value="Created">Created</option>
-              <option value="In Progress">In Progress</option>
-              <option value="Completed">Completed</option>
-              <option value="Void">Void</option>
+              <option value="" {% if ticket.status == "" %}selected{% endif %}>---------</option>
+              <option value="Created" {% if ticket.status == "Created" %}selected{% endif %}>Created</option>
+              <option value="In Progress" {% if ticket.status == "In Progress" %}selected{% endif %}>In Progress</option>
+              <option value="Completed" {% if ticket.status == "Completed" %}selected{% endif %}>Completed</option>
+              <option value="Void" {% if ticket.status == "Void" %}selected{% endif %}>Void</option>
             </select>
         </div>
         <div class="form-group row">
@@ -35,17 +35,24 @@
         <div class="form-group row">
             <label for="urg">Urgency</label>
             <select name="urgency" class="custom-select" id="urg">
-                <option value="" selected>---------</option>
-                <option value="Green">Low</option>
-                <option value="Yellow">Medium</option>
-                <option value="Red">High</option>
+                <option value="" {% if ticket.urgency == "" %}selected{% endif %}>---------</option>
+                <option value="Green" {% if ticket.urgency == "Green" %}selected{% endif %}>Low</option>
+                <option value="Yellow" {% if ticket.urgency == "Yellow" %}selected{% endif %}>Medium</option>
+                <option value="Red" {% if ticket.urgency == "Red" %}selected{% endif %}>High</option>
+            </select>
+        </div>
+        <div class="form-group row">
+            <label for="cb">Created By</label>
+            <select name="createdBy" class="custom-select" id="cb" readonly>
+              <option value="{{ticket.createdBy}}">{{ticket.createdBy}}</option>
             </select>
         </div>
         <div class="form-group row">
             <label for="at">Assigned To</label>
             <select name="assignedTo" class="custom-select" id="at">
+              <option value="">---------</option>
               {% for user in users %}
-                <option value="{{user}}">{{user}}</option>
+                <option value="{{user}}" {% if ticket.assignedTo.username == user %}selected{% endif %}>{{user}}</option>
               {% endfor %}
             </select>
         </div>
