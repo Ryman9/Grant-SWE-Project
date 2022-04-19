@@ -3,7 +3,7 @@
 {% block content %}
 {% load static %}
 {% load bugs_tags %}
-<br>
+<script>document.title="Tickets - BugTracker";</script>
 <style>
   .card card-body {
     background: transparent;
@@ -29,22 +29,24 @@
   }
 </style>
 
-<div class="row centered" style="max-width: 100px;padding-top:20px">
-    <h2>Tickets</h2>
+{% include 'bugs/status.html' %}
+
+<div class="row">
+  <hr>
 </div>
 
-<div class="row centered" style="max-width: 800px;padding-top:20px">
+<div class="row centered" style="max-width: 800px;padding-top:0px">
   <form action="/search_tickets" method="GET">
     <div class="form-group row">
       <div class="col-md">
         <div class="input-group">
-          <input type="search" class="form-control rounded" placeholder="search" aria-label="Search" aria-describedby="search-addon" name="id" />
+          <input type="search" class="form-control rounded" placeholder="search" aria-label="Search" aria-describedby="search-addon" name="id" value="{{query.id}}" />
           <button type="submit" class="btn btn-primary">Search by ID</button>
         </div>
       </div>
       <div class="col-md">
         <div class="input-group">
-          <input type="search" class="form-control rounded" placeholder="search" aria-label="Search" aria-describedby="search-addon" name="title" />
+          <input type="search" class="form-control rounded" placeholder="search" aria-label="Search" aria-describedby="search-addon" name="title" value="{{query.title}}" />
           <button type="submit" class="btn btn-primary">Search by title</button>
         </div>
       </div>
@@ -56,23 +58,24 @@
   <div class="col-md">
     <div class="card">
       <div class="card-header">
-        <span class="label">All Tickets</span>
+        <span class="label"><i class="fas fa-ticket-alt"></i>&nbsp;All Tickets</span>
       </div>
       <div class="card-body">
-        <a class="btn btn-success btn-md btn-block buttondash" href="/createTicket">Create Ticket</a>
+        <a class="btn btn-success btn-md btn-block buttondash" href="/createTicket"><i class="fas fa-plus"></i>&nbsp;Create Ticket</a>
         <table class="table">
           <tr>
-            <th>Ticket IDs</th>
+            <th>ID</th>
             <th>Title</th>
-            <th>Description</th>
-            <th>Category</th>
-            <th>Urgency</th>
             <th>Date Created</th>
+            <th>Category</th>
+            <th>Status</th>
+            <th>Urgency</th>
             <th>Assigned To</th>
             <th>Created By</th>
           </tr>
           {% for ticket in tickets %}
             <tr>
+							<td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.ticketId}}</a></td>
               <td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.title}}</a></td>
               <td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.timestamp}}</a></td>
               <td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.category}}</a></td>
@@ -92,22 +95,23 @@
   <div class="col-md">
     <div class="card">
       <div class="card-header">
-        <span class="label">My Submitted Tickets</span>
+        <span class="label"><i class="fas fa-ticket-alt"></i>&nbsp;My Submitted Tickets</span>
       </div>
       <div class="card-body">
         <table class="table">
           <tr>
-            <th>Ticket IDs</th>
+            <th>ID</th>
             <th>Title</th>
-            <th>Description</th>
-            <th>Category</th>
-            <th>Urgency</th>
             <th>Date Created</th>
+            <th>Category</th>
+            <th>Status</th>
+            <th>Urgency</th>
             <th>Assigned To</th>
             <th>Created By</th>
           </tr>
-          {% for ticket in createdTickets %}
+          {% for ticket in createTickets %}
             <tr>
+							<td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.ticketId}}</a></td>
               <td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.title}}</a></td>
               <td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.timestamp}}</a></td>
               <td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.category}}</a></td>

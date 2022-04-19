@@ -3,12 +3,15 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib import messages
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from .models import *
 from .forms import *
+
+def valuesListToList(vl):
+    return [item for t in vl for item in t]
 
 # Andrew
 def homePage(request):
@@ -32,11 +35,21 @@ def dashboardPage(request):
 @login_required(login_url="/login")
 def ticketsPage(request):
     context = {"tickets": searchTickets(request)}
+    context["totalTicketsCount"] = Ticket.objects.all().filter(Q(status='Created') | Q(status='In Progress')).count()
+    context["pendingTicketsCount"] = Ticket.objects.all().filter(status='Created').count()
+    context["inprogressTicketsCount"] = Ticket.objects.all().filter(status='In Progress').count()
     context["createTickets"] = searchTickets(request, createUser=request.user.username)
+    context["query"] = request.GET
     return render(request, 'bugs/tickets.html', context)
 
 def aboutPage(request):
     return render(request, 'bugs/about.html')
+
+def ticketDetailsPage(request, id):
+    id1 = int(id)
+    context = {"ticket": searchTickets(request, id=id1)[0]}
+    context["users"] = valuesListToList(Employee.objects.values_list("username"))
+    return render(request,'bugs/ticket_details.html',context)
 
 # LOGIN
 def loginPage(request):
@@ -44,6 +57,11 @@ def loginPage(request):
 
 def registerPage(request):
     return render(request, 'authenticate/register.html', context={"form": RegisterUserForm()})
+
+@login_required(login_url="/login")
+def profilePage(request, id):
+    res = Employee.objects.all().filter(username=id)[0]
+    return render(request, 'bugs/profile.html', {'user': res})
 
 # TICKETS
 @login_required(login_url="/login")
@@ -71,7 +89,7 @@ def deleteTicketPage(request):
    # context = {'form':form}
     #return render(request, 'bugs/create_form.html', context)
 
-@csrf_exempt
+# @csrf_exempt
 #def updateTicket(request, pk):
  #   ticket = Ticket.objects.get(id=pk)
   #  form = TicketForm(instance=ticket)
@@ -196,6 +214,18 @@ def searchTickets(request, id=-1, title="", category="", urgency="", createDate=
             res = res.filter(assignedTo_id__exact=assignUser1)
     return res
 
+def update_ticket(request, id):
+    if request.method == "GET":
+        t = Ticket.objects.filter(ticketId__exact=id)[0]
+        t.title = request.GET["title"]
+        t.description = request.GET["description"]
+        t.status = request.GET["status"]
+        t.urgency = request.GET["urgency"]
+        t.assignedTo = Employee.objects.filter(username__exact=request.GET["assignedTo"])[0]
+        t.save()
+        messages.success(request, ("Ticket updated"))
+    return redirect('tickets')
+
 def submit_ticket(request):
     if request.method == "GET":
         # form = CreateTicketForm(request.GET)
@@ -208,21 +238,39 @@ def submit_ticket(request):
             messages.success(request, ("Ticket submitted"))
     return redirect('dashboard')
 
-def ticketDetailsPage(request, id):
-    id1 = int(id)
-    context = {"ticket": searchTickets(request, id=id1)[0]}
-    return render(request,'bugs/ticket_details.html',context)
-
-def ticket_delete(request, id):
+def delete_ticket(request, id):
     id1 = int(id)
     t = searchTickets(request, id=id1)[0]
-    t.delete()
-    return redirect('dashboard')
+    if t is not None:
+        t.delete()
+    return redirect('tickets')
 
 def search_tickets(request):
     if request.method == "GET":
         id = int(request.GET["id"]) if len(request.GET["id"]) > 0 else -1
         title = request.GET["title"]
         context = {"tickets": searchTickets(request, id=id, title=title)}
+        context["totalTicketsCount"] = Ticket.objects.all().filter(Q(status='Created') | Q(status='In Progress')).count()
+        context["pendingTicketsCount"] = Ticket.objects.all().filter(status='Created').count()
+        context["inprogressTicketsCount"] = Ticket.objects.all().filter(status='In Progress').count()
+        context["createTickets"] = searchTickets(request, createUser=request.user.username)
+        context["query"] = request.GET
         return render(request,'bugs/tickets.html',context)
     return render(request,'bugs/tickets.html')
+
+def search_categories1(request):
+    return HttpResponse()
+
+def search_categories2(request, q):
+    txt = ""
+    if request.method == "GET":
+        lt = Ticket.objects.values_list("category")
+        l = valuesListToList(lt)
+        if len(q) > 0:
+            for i in l:
+                if q.lower() not in i.lower():
+                    l.remove(i)
+        s = set(l)
+        txt = str(s)
+        txt = txt[1:-1].replace("'", "")
+    return HttpResponse(txt)

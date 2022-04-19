@@ -8,6 +8,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>BugTracker</title>
 	<link rel="stylesheet" href="{% static 'bootstrap.min.css' %}" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<link rel="stylesheet" href="{% static 'fa/css/fontawesome.min.css' %}">
+	<link rel="stylesheet" href="{% static 'fa/css/solid.min.css' %}">
 	<link rel="icon" href= "{% static 'bugs/images/palmtechLogoSmall.png' %}">
 	<style>
 		#logo {
@@ -85,6 +87,12 @@
     form label {
         padding-right: 8px;
     }
+		footer {
+			position: absolute;
+			bottom: 16px;
+			left: 48px;
+			color: #fff;
+		}
 	</style>
 </head>
 <body>
@@ -109,7 +117,7 @@
 	</div>
 	<footer>
 		<center>
-			<p><a href="#">Privacy Policy</a> &verbar; &copy; 2022 Palm Technologies, LLC.</p>
+			<p><a href="#" class="text-warning">Privacy Policy</a> &verbar; &copy; 2022 Palm Technologies, LLC.</p>
 		</center>
 	</footer>
 	<script src="{% static 'jquery-3.4.1.slim.min.js' %}" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

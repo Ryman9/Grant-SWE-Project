@@ -2,6 +2,7 @@
 {% block content %}
 {% load bugs_tags %}
 <!--User dashboard-->
+<script>document.title="Dashboard - BugTracker";</script>
 <style>
 	/*#recent {
 		background-color: #89d4cf;
@@ -26,16 +27,18 @@
 </style>
 
 {% include 'bugs/status.html' %}
+
 <div class="row" style="padding-top:36px">
 	<div class="col">
 		<div class="card">
 			<div class="card-header">
-				<h5 id="ticketAssigned">My Assigned Tickets</h5>
+				<h5 id="ticketAssigned"><i class="fas fa-ticket-alt"></i>&nbsp;My Assigned Tickets</h5>
 			</div>
 			<div class="card-body">
-				<a class="btn btn-success btn-md btn-block buttondash" href="/createTicket">Create Ticket</a>
+				<a class="btn btn-success btn-md btn-block buttondash" href="/createTicket"><i class="fas fa-plus"></i>&nbsp;Create Ticket</a>
 				<table class="table table-sm">
 					<tr>
+						<th>ID</th>
 						<th>Title</th>
 						<th>Date Created</th>
 						<th>Category</th>
@@ -46,6 +49,7 @@
 					</tr>
 					{% for ticket in assignTickets %}
 						<tr>
+							<td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.ticketId}}</a></td>
 							<td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.title}}</a></td>
 							<td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.timestamp}}</a></td>
 							<td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.category}}</a></td>
@@ -65,7 +69,7 @@
 	<div class="col">
 		<div class="card">
 			<div class="card-header">
-				<h5 id="recent">Ticket Updates</h5>
+				<h5 id="recent"><i class="fas fa-history"></i>&nbsp;Ticket Updates</h5>
 			</div>
 			<div class="card-body">
 				<table class="table table-sm">

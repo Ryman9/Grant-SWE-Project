@@ -1,45 +1,55 @@
 {% extends 'bugs/base.html' %}
 {% block content %}
-<div class="row centered" style="max-width: 400px;padding-top:20px">
+<style>#cat_results{display:none;width:350px;position:absolute;box-shadow: 0px 24px 16px -12px rgba(0, 0, 0, 0.5);}</style>
+<script>
+  var xhr = new XMLHttpRequest();
+  xhr.addEventListener("readystatechange", function() {
+    if (this.readyState === this.DONE) {
+      $("#cat_results").empty();
+      var s = this.responseText.split(",");
+      for (var i = 0; i < s.length; i++) {
+        $("#cat_results").append("<option>" + s[i].trim() + "</option>");
+      }
+    }
+  });
+
+  setTimeout(function() {
+    var offset = $('#id_category').offset();
+    $('#cat_results').css({
+      "top": Math.round(offset.top) + 36,
+      "left": Math.round(offset.left)
+    });
+
+    $("#id_category").on("focus click", function() {
+      $("#cat-results").show();
+    });
+    $("#cat_results").on("blur", function() {
+      $("#cat_results").hide();
+    });
+
+    $("#id_category").on("change keyup", function() {
+      $("#cat_results").show();
+      $("#cat_results").empty();
+      xhr.open("GET", "/search_categories/" + $(this).val());
+      xhr.send(null);
+    });
+
+    $("#cat_results").on("change", function() {
+      $("#id_category").val($(this).val());
+    });
+  }, 1000);
+</script>
+
+<select class="custom-select" id="cat_results" multiple></select>
+
+<div class="row text-white" style="width:100%;padding-top:20px">
+  <div style="margin-left:auto;margin-right:auto;width:100%;text-align:center;">
     <h2>Create Ticket</h2>
 </div>
-<div class="row centered" style="max-width: 500px">
+
+<div class="row centered text-white" style="max-width: 500px">
     <form action="/submit_ticket" method="GET">
         {% csrf_token %}
-        <!-- <div class="form-row">
-            <div class="form-group col-md-6">
-                <label for="inputTicketName">Create a title for your ticket</label>
-                <input type="text" class="form-control" id="inputtext" placeholder="Game bug, graphics bug, ...">
-            </div>
-            <div class="form-group col-md-6">
-                <label for="inputPassword4">Enter Category</label>
-                <input type="text" class="form-control" id="inputCategory" placeholder="Category...">
-            </div>
-        </div>
-        <div class="form-group col-md-6">
-            <label for="exampleFormControlTextarea1">Please describe the problem</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Description..."></textarea>
-        </div>
-        <div class="form-group col-md-4">
-            <label for="inputUrgency">Urgency/Severity</label>
-            <select id="inputUrgency" class="form-control">
-                <option selected>Choose a level of severity</option>
-                <option>1 - Low</option>
-                <option>2 - Medium-low</option>
-                <option>3 - Medium</option>
-                <option>4 - High</option>
-                <option>5 - Critical</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="gridCheck">
-                <label class="form-check-label" for="gridCheck">
-                    Everything is correct?
-                </label>
-            </div>
-        </div>
-        <button type="submit" class="btn btn-primary btn-block">Submit Ticket</button>-->
         <table>
         {{form}}
         <tr><td><hr></td><td><hr></td></tr>
@@ -47,4 +57,5 @@
         </table>
     </form>
 </div>
+
 {% endblock %}
