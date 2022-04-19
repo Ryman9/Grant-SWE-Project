@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.http import HttpResponse
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 from .models import *
@@ -14,7 +15,9 @@ def homePage(request):
     context = {"updates": Update.objects.all()}
     context["logged_in"] = request.user.is_authenticated
     if request.user.is_authenticated:
-        context["totalTickets"] = len(searchTickets(request))
+        context["totalTicketsCount"] = Ticket.objects.all().filter(Q(status='Created') | Q(status='In Progress')).count()
+        context["pendingTicketsCount"] = Ticket.objects.all().filter(status='Created').count()
+        context["inprogressTicketsCount"] = Ticket.objects.all().filter(status='In Progress').count()
         context["createTickets"] = searchTickets(request, createUser=request.user.username)
         context["assignTickets"] = searchTickets(request, assignUser=request.user.username)
         return render(request, 'bugs/dashboard.html', context)
@@ -28,7 +31,9 @@ def dashboardPage(request):
 
 @login_required(login_url="/login")
 def ticketsPage(request):
-    return render(request, 'bugs/tickets.html')
+    context = {"tickets": searchTickets(request)}
+    context["createTickets"] = searchTickets(request, createUser=request.user.username)
+    return render(request, 'bugs/tickets.html', context)
 
 def aboutPage(request):
     return render(request, 'bugs/about.html')
@@ -163,17 +168,18 @@ def register_user(request):
   return render(request,'authenticate/register.html',{'form':form})
 
 # TICKETS
-def searchTickets(request, id=-1, category="", urgency="", createDate="", createUser="", assignUser=""):
+def searchTickets(request, id=-1, title="", category="", urgency="", createDate="", createUser="", assignUser=""):
     res = Ticket.objects.all()
     if id > -1:
         res = res.filter(ticketId__exact=id)
+    if len(title) > 0:
+        res = res.filter(title__icontains=title)
     if len(category) > 0:
-        res = res.filter(category__exact=category)
+        res = res.filter(category__iexact=category)
     if len(urgency) > 0:
-        res = res.filter(urgency__exact=urgency)
+        res = res.filter(urgency__iexact=urgency)
     if len(createDate) > 0:
-        res = res.filter(timestamp__exact=createDate)
-
+        res = res.filter(timestamp__iexact=createDate)
     if len(createUser) > 0:
         createUsernames = Employee.objects.filter(username__exact=createUser)
         createUser1 = -1
@@ -181,18 +187,16 @@ def searchTickets(request, id=-1, category="", urgency="", createDate="", create
             createUser1 = createUsernames[0].userId
         if createUser1 > -1:
             res = res.filter(createdBy_id__exact=createUser1)
-
     if len(assignUser) > 0:
         assignUsernames = Employee.objects.filter(username__exact=assignUser)
+        assignUser1 = -1
         if len(assignUsernames) > 0:
             assignUser1 = assignUsernames[0].userId
-        assignUser1 = -1
         if assignUser1 > -1:
-            res = res.filter(Q(assignedTo_id__exact=assignUser1))
-
+            res = res.filter(assignedTo_id__exact=assignUser1)
     return res
 
-def submitTicket(request):
+def submit_ticket(request):
     if request.method == "GET":
         # form = CreateTicketForm(request.GET)
         form = TicketForm(request.GET)
@@ -204,7 +208,7 @@ def submitTicket(request):
             messages.success(request, ("Ticket submitted"))
     return redirect('dashboard')
 
-def ticketPage(request, id):
+def ticketDetailsPage(request, id):
     id1 = int(id)
     context = {"ticket": searchTickets(request, id=id1)[0]}
     return render(request,'bugs/ticket_details.html',context)
@@ -214,3 +218,11 @@ def ticket_delete(request, id):
     t = searchTickets(request, id=id1)[0]
     t.delete()
     return redirect('dashboard')
+
+def search_tickets(request):
+    if request.method == "GET":
+        id = int(request.GET["id"]) if len(request.GET["id"]) > 0 else -1
+        title = request.GET["title"]
+        context = {"tickets": searchTickets(request, id=id, title=title)}
+        return render(request,'bugs/tickets.html',context)
+    return render(request,'bugs/tickets.html')

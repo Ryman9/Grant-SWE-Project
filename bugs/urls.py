@@ -13,11 +13,12 @@ urlpatterns = [
     path('updateTicket/', views.updateTicketPage),
     path('deleteTicket/', views.deleteTicketPage),
     path('tickets/', views.ticketsPage),
-    path('ticket/details/<str:id>', views.ticketPage),
+    path('ticket/details/<str:id>', views.ticketDetailsPage),
     # backend
-    path('submit_ticket/', views.submitTicket),
+    path('submit_ticket/', views.submit_ticket),
     path('login_user/', views.login_user),
     path('logout_user/', views.logout_user, name='logout'),
     path('register_user/', views.register_user, name='register_user'),
     path('ticket/delete/<str:id>', views.ticket_delete),
+    path('search_tickets/', views.search_tickets),
 ]

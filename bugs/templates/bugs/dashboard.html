@@ -1,11 +1,9 @@
 {% extends 'bugs/base.html' %}
 {% block content %}
+{% load bugs_tags %}
 <!--User dashboard-->
 <style>
-	h5 {
-		text-align: center;
-	}
-	#recent {
+	/*#recent {
 		background-color: #89d4cf;
 		background-image: linear-gradient(315deg, #89d4cf 0%, #6e45e1 74%);
 		padding-left: 240px;
@@ -24,93 +22,67 @@
 	#ticketSubmit {
 		background-color: #89d4cf;
 		background-image: linear-gradient(315deg, #89d4cf 0%, #6e45e1 74%);
-	}
+	} */
 </style>
 
 {% include 'bugs/status.html' %}
-
-<div class="row">
+<div class="row" style="padding-top:36px">
 	<div class="col">
-		<h5 id="recent">Ticket Updates</h5>
-		<hr>
-		<div class="card card-body">
-			<a class="btn btn-primary btn-sm btn-block buttondash" href="/updateTicket">Create Update</a>
-			<table class="table table-sm">
-				<tr>
-					<th>Update</th>
-					<th>Employee</th>
-					<th>Ticket</th>
-				</tr>
-				{% for update in updates %}
-				<tr>
-					<td><a href="/update/details/{{update.updateId}}">{{update.updateId}}</a></td>
-					<td><a href="/update/details/{{update.updateId}}">{{update.madeBy}}</a></td>
-					<td><a href="/update/details/{{update.updateId}}">{{update.onTicket}}</a></td>
-				</tr>
-				{% endfor %}
-			</table>
+		<div class="card">
+			<div class="card-header">
+				<h5 id="ticketAssigned">My Assigned Tickets</h5>
+			</div>
+			<div class="card-body">
+				<a class="btn btn-success btn-md btn-block buttondash" href="/createTicket">Create Ticket</a>
+				<table class="table table-sm">
+					<tr>
+						<th>Title</th>
+						<th>Date Created</th>
+						<th>Category</th>
+						<th>Status</th>
+						<th>Urgency</th>
+						<th>Assigned To</th>
+						<th>Created By</th>
+					</tr>
+					{% for ticket in assignTickets %}
+						<tr>
+							<td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.title}}</a></td>
+							<td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.timestamp}}</a></td>
+							<td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.category}}</a></td>
+							<td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.status}}</a></td>
+							<td><a href="/ticket/details/{{ticket.ticketId}}" class="text-{{ticket.urgency|toBS}}">{{ticket.urgency}}</a></td>
+							<td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.createdBy}}</a></td>
+							<td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.assignedTo}}</a></td>
+						</tr>
+					{% endfor %}
+				</table>
+			</div>
 		</div>
 	</div>
 </div>
 
 <div class="row" style="padding-top:48px">
 	<div class="col">
-		<h5 id="ticketSubmit">My Submitted Tickets</h5>
-		<hr>
-		<div class="card card-body">
-			<a class="btn btn-primary btn-sm btn-block buttondash" href="/createTicket">Create Ticket</a>
-			<table class="table table-sm">
-				<tr>
-					<th>Title</th>
-					<th>Date Created</th>
-					<th>Category</th>
-					<th>Status</th>
-					<th>Urgency</th>
-					<th>Assigned To</th>
-					<th>Created By</th>
-				</tr>
-				{% for ticket in createTickets %}
+		<div class="card">
+			<div class="card-header">
+				<h5 id="recent">Ticket Updates</h5>
+			</div>
+			<div class="card-body">
+				<table class="table table-sm">
 					<tr>
-						<td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.title}}</a></td>
-						<td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.timestamp}}</a></td>
-						<td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.category}}</a></td>
-						<td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.status}}</a></td>
-						<td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.urgency}}</a></td>
-						<td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.createdBy}}</a></td>
-						<td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.assignedTo}}</a></td>
+						<th>Update</th>
+						<th>Employee</th>
+						<th>Ticket</th>
 					</tr>
-				{% endfor %}
-			</table>
-		</div>
-	</div>
-
-	<div class="col">
-		<h5 id="ticketAssigned">My Assigned Tickets</h5>
-		<hr>
-		<div class="card card-body">
-			<a class="btn btn-primary btn-sm btn-block buttondash" href="/updateTicket">Update Ticket</a>
-			<table class="table table-sm">
-				<tr>
-					<th>Title</th>
-					<th>Date Created</th>
-					<th>Category</th>
-					<th>Status</th>
-					<th>Urgency</th>
-					<th>Assigned To</th>
-					<th>Created By</th>
-				</tr>
-				{% for ticket in assignTickets %}
+					{% for update in updates %}
 					<tr>
-						<td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.title}}</a></td>
-						<td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.timestamp}}</a></td>
-						<td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.category}}</a></td>
-						<td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.status}}</a></td>
-						<td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.urgency}}</a></td>
-						<td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.createdBy}}</a></td>
-						<td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.assignedTo}}</a></td>
+						<td><a href="/update/details/{{update.updateId}}">{{update.updateId}}</a></td>
+						<td><a href="/update/details/{{update.updateId}}">{{update.madeBy}}</a></td>
+						<td><a href="/update/details/{{update.updateId}}">{{update.onTicket}}</a></td>
 					</tr>
-				{% endfor %}
-			</table>
+					{% endfor %}
+				</table>
+			</div>
 		</div>
 	</div>
 </div>

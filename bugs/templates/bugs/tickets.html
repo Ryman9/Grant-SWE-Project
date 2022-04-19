@@ -1,149 +1,125 @@
 {% extends 'bugs/base.html' %}
 <!--Displays ticket tables with information from db-->
 {% block content %}
-{% include 'bugs/navbar.html' %}
+{% load static %}
+{% load bugs_tags %}
 <br>
 <style>
-    .tickets h1 {
-        color: black;
-        text-align: center;
-        padding: 20px;
-        border: 2px solid black;
-    }
-
-    .card card-body {
-        background: transparent;
-    }
-
-    .label {
-        text-align: center;
-        font-size: 24px;
-    }
-
-    .deletebutton {
-        background-color: #000000;
-        background-image: linear-gradient(315deg, #000000 0%, #b82e1f 74%);
-        display: inline-block;
-        color: white;
-        padding: 12px 34px;
-        font-size: 24px;
-        margin: 0;
-        position: absolute;
-        top: 680px;
-        left: 760px;
-        cursor: pointer;
-        font-weight: bold;
-        border-radius: 8px;
-    }
-
-    #search1 {
-        position: absolute;
-        top: -70px;
-        left: 40px;
-        width: 420px;
-    }
-
-    #search2 {
-        position: absolute;
-        top: -70px;
-        left: 800px;
-        width: 420px;
-    }
-    #button1 {
-        background-color: #000000;
-        background-image: linear-gradient(147deg, #000000 0%, #04619f 74%);
-        color: white;
-        border: none;
-        font-weight: bold;
-    }
-
-    #table1 {
-        background-color: #b8c6db;
-        background-image: linear-gradient(315deg, #b8c6db 0%, #f5f7fa 74%);
-    }
-
+  .card card-body {
+    background: transparent;
+  }
+  .label {
+    text-align: center;
+    font-size: 24px;
+  }
+  .deletebutton {
+    background-color: #000000;
+    background-image: linear-gradient(315deg, #000000 0%, #b82e1f 74%);
+    display: inline-block;
+    color: white;
+    padding: 12px 34px;
+    font-size: 24px;
+    margin: 0;
+    position: absolute;
+    top: 680px;
+    left: 760px;
+    cursor: pointer;
+    font-weight: bold;
+    border-radius: 8px;
+  }
 </style>
-<br />
-<br />
-<br />
-<br />
 
-<!--STILL NEEDS TO BE DONE. CONNECT TO DB TO SHOW CONTENT ON TABLES HERE.-->
-<div class="tickets">
-    <h1>Tickets</h1>
+<div class="row centered" style="max-width: 100px;padding-top:20px">
+    <h2>Tickets</h2>
 </div>
-<br />
-<br />
-<br />
 
-
+<div class="row centered" style="max-width: 800px;padding-top:20px">
+  <form action="/search_tickets" method="GET">
+    <div class="form-group row">
+      <div class="col-md">
+        <div class="input-group">
+          <input type="search" class="form-control rounded" placeholder="search" aria-label="Search" aria-describedby="search-addon" name="id" />
+          <button type="submit" class="btn btn-primary">Search by ID</button>
+        </div>
+      </div>
+      <div class="col-md">
+        <div class="input-group">
+          <input type="search" class="form-control rounded" placeholder="search" aria-label="Search" aria-describedby="search-addon" name="title" />
+          <button type="submit" class="btn btn-primary">Search by title</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
 
 <div class="row">
-    <div class="col-md">
-        <div class="input-group" id="search1">
-            <input type="search" class="form-control rounded" placeholder="search for ticket by ticket ID" aria-label="Search" aria-describedby="search-addon" />
-            <button type="button" class="btn btn-outline-primary" id="button1">Search by ID</button>
-        </div>
+  <div class="col-md">
+    <div class="card">
+      <div class="card-header">
+        <span class="label">All Tickets</span>
+      </div>
+      <div class="card-body">
+        <a class="btn btn-success btn-md btn-block buttondash" href="/createTicket">Create Ticket</a>
+        <table class="table">
+          <tr>
+            <th>Ticket IDs</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Urgency</th>
+            <th>Date Created</th>
+            <th>Assigned To</th>
+            <th>Created By</th>
+          </tr>
+          {% for ticket in tickets %}
+            <tr>
+              <td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.title}}</a></td>
+              <td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.timestamp}}</a></td>
+              <td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.category}}</a></td>
+              <td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.status}}</a></td>
+              <td><a href="/ticket/details/{{ticket.ticketId}}" class="text-{{ticket.urgency|toBS}}">{{ticket.urgency}}</a></td>
+              <td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.createdBy}}</a></td>
+              <td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.assignedTo}}</a></td>
+            </tr>
+          {% endfor %}
+        </table>
+      </div>
     </div>
+  </div>
 </div>
 
-<div class="row">
-    <div class="col-md">
-        <div class="input-group" id="search2">
-            <input type="search" class="form-control rounded" placeholder="search for ticket by ticket title" aria-label="Search" aria-describedby="search-addon" />
-            <button type="button" class="btn btn-outline-primary" id="button1">Search by title</button>
-        </div>
+<div class="row" style="padding-top:20px">
+  <div class="col-md">
+    <div class="card">
+      <div class="card-header">
+        <span class="label">My Submitted Tickets</span>
+      </div>
+      <div class="card-body">
+        <table class="table">
+          <tr>
+            <th>Ticket IDs</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Urgency</th>
+            <th>Date Created</th>
+            <th>Assigned To</th>
+            <th>Created By</th>
+          </tr>
+          {% for ticket in createdTickets %}
+            <tr>
+              <td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.title}}</a></td>
+              <td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.timestamp}}</a></td>
+              <td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.category}}</a></td>
+              <td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.status}}</a></td>
+              <td><a href="/ticket/details/{{ticket.ticketId}}" class="text-{{ticket.urgency|toBS}}">{{ticket.urgency}}</a></td>
+              <td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.createdBy}}</a></td>
+              <td><a href="/ticket/details/{{ticket.ticketId}}">{{ticket.assignedTo}}</a></td>
+            </tr>
+          {% endfor %}
+        </table>
+      </div>
     </div>
+  </div>
 </div>
-<div class="row">
-    <div class="col-md">
-        <div class="card card-body" id="table1">
-            <a class="label ">All Tickets</a>
-            <table class="table">
-                <tr>
-                    <th>Ticket IDs</th>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Category</th>
-                    <th>Urgency</th>
-                    <th>Date Created</th>
-                    <th>Assigned To</th>
-                    <th>Created By</th>
-                </tr>
-
-            </table>
-        </div>
-    </div>
-
-</div>
-<br />
-<br />
-<div class="row">
-    <div class="col-md">
-        <div class="card card-body"id="table1">
-            <a class="label ">My Tickets Submitted</a>
-            <table class="table">
-                <tr>
-                    <th>Ticket IDs</th>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Category</th>
-                    <th>Urgency</th>
-                    <th>Date Created</th>
-                    <th>Assigned To</th>
-                    <th>Created By</th>
-                </tr>
-
-            </table>
-        </div>
-
-    </div>
-
-
-
-
-    <a href="\deleteTicket" class="deletebutton"> Delete A Ticket </a>
-</div>
-
-
-        {% endblock %}
+{% endblock %}
