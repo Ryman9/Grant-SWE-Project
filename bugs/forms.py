@@ -31,7 +31,7 @@ class UpdateForm(ModelForm):
         fields = '__all__'
 
 class LoginUserForm(forms.Form):
-	username = forms.CharField(max_length=40, label="Username or email", widget=forms.TextInput(attrs = {'class':'form-control'}))
+	username = forms.CharField(max_length=40, widget=forms.TextInput(attrs = {'class':'form-control'}))
 	password = forms.CharField(max_length=50, widget=forms.PasswordInput(attrs = {'class':'form-control'}))
 
 class RegisterUserForm(UserCreationForm):

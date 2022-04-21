@@ -21,9 +21,9 @@ class Ticket(models.Model):
     )
 
     URGENCY = (
-        ('Green', 'Low'),
-        ('Yellow', 'Medium'),
-        ('Red', 'High'),
+        ('Green', 'Green'),
+        ('Yellow', 'Yellow'),
+        ('Red', 'Red'),
     )
 
     ticketId = models.AutoField(primary_key=True)
